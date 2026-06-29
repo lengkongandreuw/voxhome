@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoxHome | Local Growth for Home Service Contractors</title>
+  <meta name="description" content="VoxHome helps HVAC, plumbing, and roofing contractors get found, trusted, and contacted by more local homeowners." />
+  <style>
+    :root {
+      --ink: #071636;
+      --muted: #536176;
+      --line: #dce4ef;
+      --soft: #f5f8fc;
+      --white: #ffffff;
+      --blue: #1767d8;
+      --blue-dark: #0d4fb3;
+      --green: #24a365;
+      --gold: #f6b739;
+      --steel: #e9eef5;
+      --radius: 8px;
+      --shadow: 0 18px 50px rgba(7, 22, 54, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      background: var(--white);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    .button {
+      align-items: center;
+      border: 0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: inline-flex;
+      font: inherit;
+      font-weight: 760;
+      gap: 10px;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      white-space: nowrap;
+    }
+
+    .button:hover,
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: var(--blue);
+      box-shadow: 0 12px 28px rgba(23, 103, 216, 0.24);
+      color: var(--white);
+    }
+
+    .button-primary:hover {
+      background: var(--blue-dark);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid #aab6c8;
+      color: var(--ink);
+    }
+
+    .icon {
+      display: inline-grid;
+      flex: 0 0 auto;
+      height: 28px;
+      place-items: center;
+      width: 28px;
+    }
+
+    .icon svg {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+
+    .shell {
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 0 28px;
+    }
+
+    .hero {
+      background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 26%, rgba(255, 255, 255, 0.45) 47%, rgba(255, 255, 255, 0.05) 78%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1) 76%, #ffffff 100%),
+        url("assets/voxhome-hero.png");
+      background-position: center, center, center right;
+      background-size: cover, cover, cover;
+      min-height: 92vh;
+      position: relative;
+    }
+
+    .nav {
+      align-items: center;
+      display: flex;
+      gap: 24px;
+      justify-content: space-between;
+      padding: 38px 0 28px;
+    }
+
+    .brand {
+      align-items: center;
+      display: inline-flex;
+      font-size: clamp(1.55rem, 2vw, 2rem);
+      font-weight: 860;
+      gap: 12px;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      color: var(--blue);
+      height: 38px;
+      width: 38px;
+    }
+
+    .brand span span {
+      color: var(--blue);
+    }
+
+    .nav-right {
+      align-items: center;
+      display: flex;
+      gap: 28px;
+      font-size: 1rem;
+      font-weight: 620;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      padding: clamp(52px, 8vw, 110px) 0 58px;
+    }
+
+    .eyebrow {
+      align-items: center;
+      color: var(--blue-dark);
+      display: inline-flex;
+      font-size: 0.86rem;
+      font-weight: 780;
+      gap: 9px;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      background: var(--green);
+      border-radius: 999px;
+      content: "";
+      height: 9px;
+      width: 9px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(3.05rem, 6.1vw, 5.85rem);
+      letter-spacing: 0;
+      line-height: 0.98;
+      margin-bottom: 22px;
+      max-width: 650px;
+    }
+
+    .accent {
+      color: var(--blue);
+      display: block;
+    }
+
+    .hero-copy {
+      color: #46536a;
+      font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+      line-height: 1.55;
+      margin-bottom: 30px;
+      max-width: 610px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 42px;
+    }
+
+    .trust-row {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(4, minmax(116px, 1fr));
+      max-width: 680px;
+    }
+
+    .trust-item {
+      align-items: center;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 34px 1fr;
+      min-width: 0;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 0.86rem;
+      line-height: 1.15;
+    }
+
+    .trust-item small {
+      color: var(--muted);
+      display: block;
+      font-size: 0.76rem;
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+
+    section {
+      padding: 88px 0;
+    }
+
+    .section-kicker {
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      font-weight: 820;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .section-head {
+      align-items: end;
+      display: grid;
+      gap: 28px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.65fr);
+      margin-bottom: 38px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3vw, 3.15rem);
+      letter-spacing: 0;
+      line-height: 1.08;
+      margin-bottom: 0;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 0;
+    }
+
+    .problem-band {
+      background: var(--soft);
+    }
+
+    .problem-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px;
+    }
+
+    .panel h3,
+    .service h3,
+    .step h3 {
+      font-size: 1.15rem;
+      line-height: 1.25;
+      margin-bottom: 9px;
+    }
+
+    .panel p,
+    .service p,
+    .step p,
+    .deliverable p,
+    .price-card p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .story {
+      align-items: center;
+      display: grid;
+      gap: 42px;
+      grid-template-columns: 0.85fr 1fr;
+    }
+
+    .story-card {
+      background: linear-gradient(145deg, #071636, #123d7f);
+      border-radius: var(--radius);
+      color: var(--white);
+      padding: 34px;
+      position: relative;
+    }
+
+    .story-card p {
+      color: #dce9ff;
+      font-size: 1.08rem;
+      margin-bottom: 24px;
+    }
+
+    .notification {
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      display: flex;
+      gap: 13px;
+      margin-top: 14px;
+      padding: 13px;
+    }
+
+    .notification strong {
+      display: block;
+      line-height: 1.2;
+    }
+
+    .notification small {
+      color: #bdd4f5;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .services-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .service {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 270px;
+      padding: 22px;
+    }
+
+    .service .icon {
+      color: var(--blue);
+      height: 34px;
+      margin-bottom: 20px;
+      width: 34px;
+    }
+
+    .steps-band {
+      background: #f8fafc;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 220px;
+      padding: 22px;
+      position: relative;
+    }
+
+    .step::before {
+      background: #eaf2ff;
+      border-radius: 999px;
+      color: var(--blue-dark);
+      content: counter(step);
+      counter-increment: step;
+      display: grid;
+      font-weight: 840;
+      height: 36px;
+      margin-bottom: 24px;
+      place-items: center;
+      width: 36px;
+    }
+
+    .deliverables {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .deliverable {
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 30px 1fr;
+      padding: 18px 0;
+    }
+
+    .deliverable .icon {
+      color: var(--green);
+      height: 24px;
+      width: 24px;
+    }
+
+    .deliverable strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .pricing {
+      background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    }
+
+    .price-wrap {
+      align-items: center;
+      display: grid;
+      gap: 30px;
+      grid-template-columns: 0.9fr 1fr;
+    }
+
+    .price-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .price-label {
+      color: var(--blue-dark);
+      font-size: 0.86rem;
+      font-weight: 820;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .price {
+      align-items: baseline;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+
+    .price strong {
+      font-size: clamp(2.6rem, 5vw, 4.3rem);
+      line-height: 1;
+    }
+
+    .price span {
+      color: var(--muted);
+      font-weight: 720;
+    }
+
+    .price-card ul {
+      color: var(--muted);
+      display: grid;
+      gap: 10px;
+      list-style: none;
+      margin: 24px 0 0;
+      padding: 0;
+    }
+
+    .price-card li {
+      align-items: center;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 20px 1fr;
+    }
+
+    .price-card li::before {
+      color: var(--green);
+      content: "✓";
+      font-weight: 900;
+    }
+
+    .final-cta {
+      background: #071636;
+      color: var(--white);
+      padding: 76px 0;
+    }
+
+    .cta-inner {
+      align-items: center;
+      display: grid;
+      gap: 28px;
+      grid-template-columns: 1fr auto;
+    }
+
+    .final-cta h2 {
+      max-width: 750px;
+    }
+
+    .final-cta p {
+      color: #c9d6ea;
+      font-size: 1.1rem;
+      margin: 14px 0 0;
+      max-width: 720px;
+    }
+
+    .footer {
+      background: #071636;
+      border-top: 1px solid rgba(255, 255, 255, 0.13);
+      color: #b8c5d8;
+      padding: 24px 0;
+    }
+
+    .footer .shell {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .footer strong {
+      color: var(--white);
+    }
+
+    @media (max-width: 1060px) {
+      .services-grid,
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .service,
+      .step {
+        min-height: 0;
+      }
+
+      .trust-row {
+        grid-template-columns: repeat(2, minmax(150px, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .hero {
+        background-image:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0.28) 100%),
+          url("assets/voxhome-hero.png");
+        background-position: center, 58% center;
+        min-height: auto;
+      }
+
+      .nav {
+        align-items: flex-start;
+        padding-top: 24px;
+      }
+
+      .nav-right {
+        display: none;
+      }
+
+      .hero-content {
+        padding: 56px 0 320px;
+      }
+
+      h1 {
+        font-size: clamp(2.85rem, 14vw, 4.5rem);
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+        max-width: 360px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .section-head,
+      .story,
+      .price-wrap,
+      .cta-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-grid,
+      .deliverables {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-inner {
+        align-items: start;
+      }
+
+      .final-cta .button {
+        max-width: 360px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        padding: 0 18px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      .hero-content {
+        padding-bottom: 260px;
+      }
+
+      .trust-row,
+      .services-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-item {
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(180, 192, 210, 0.8);
+        border-radius: var(--radius);
+        padding: 10px;
+      }
+
+      .footer .shell {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="shell">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="VoxHome home">
+          <svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-label="VoxHome mark">
+            <path fill="currentColor" d="M5 22.4 24 6l19 16.4-4.1 4.7L24 14.2 9.1 27.1 5 22.4Z" />
+            <path fill="currentColor" d="M11 24.5h8.4V39H11V24.5Zm17.6 0H37V39h-8.4V24.5Zm-7.2 5.3h5.2V39h-5.2v-9.2Z" />
+          </svg>
+          <span>Vox<span>Home</span></span>
+        </a>
+        <div class="nav-right">
+          <span>Built for HVAC, Plumbing & Roofing Pros</span>
+          <a class="button button-primary" href="#how">See How It Works</a>
+        </div>
+      </nav>
+
+      <div class="hero-content" id="top">
+        <div class="eyebrow">Local growth system</div>
+        <h1>Expand Your Local <span class="accent">Service Market.</span></h1>
+        <p class="hero-copy">VoxHome helps HVAC, plumbing, and roofing businesses get more booked jobs from Google, phone leads, stronger reviews, high-converting landing pages, and professionally managed social media.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#pricing">
+            Expand My Local Reach
+            <span aria-hidden="true">→</span>
+          </a>
+          <a class="button button-secondary" href="#system">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#071636"/><path d="m10 8 6 4-6 4V8Z" fill="#fff"/></svg>
+            </span>
+            See How VoxHome Works
+          </a>
+        </div>
+        <div class="trust-row" aria-label="VoxHome benefits">
+          <div class="trust-item">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9c-.3 1.4-1 2.5-2.1 3.3v2.7h3.4c2-1.8 3.4-4.5 3.4-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.4-2.7c-.9.6-2.1 1-3.9 1-3 0-5.5-2-6.4-4.7H2.1v2.8C3.9 20.4 7.6 23 12 23Z"/><path fill="#FBBC05" d="M5.6 13.8c-.2-.6-.4-1.2-.4-1.8s.1-1.3.4-1.8V7.4H2.1C1.4 8.8 1 10.3 1 12s.4 3.2 1.1 4.6l3.5-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.1-3.1C17.5 2.1 15 1 12 1 7.6 1 3.9 3.6 2.1 7.4l3.5 2.8C6.5 7.4 9 5.4 12 5.4Z"/></svg>
+            </span>
+            <span><strong>Local Visibility</strong><small>Get found on Google</small></span>
+          </div>
+          <div class="trust-item">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path fill="#2faa67" d="M7.5 4.2 9 7.8c.3.7.1 1.4-.4 1.9l-1 1c1.1 2.1 2.8 3.8 5 5l1-1c.5-.5 1.3-.7 1.9-.4l3.6 1.5c.7.3 1.1 1 1 1.8l-.4 2.4c-.1.7-.7 1.2-1.4 1.2C9.7 21.2 2.8 14.3 2.8 5.7c0-.7.5-1.3 1.2-1.4l2.4-.4c.8-.1 1.5.3 1.8 1Z"/><path stroke="#2faa67" stroke-linecap="round" stroke-width="2" d="M15 5.2c1.8.5 3.2 1.9 3.8 3.8M16.4 1.9c2.8.8 4.9 2.9 5.7 5.7"/></svg>
+            </span>
+            <span><strong>Every Lead</strong><small>Answered faster</small></span>
+          </div>
+          <div class="trust-item">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="#f6b739" d="m12 1.7 3.1 6.4 7 1-5 5 1.2 7-6.3-3.3-6.3 3.3 1.2-7-5-5 7-1L12 1.7Z"/></svg>
+            </span>
+            <span><strong>5-Star Reviews</strong><small>That build trust</small></span>
+          </div>
+          <div class="trust-item">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path fill="#32a36b" d="M3 13h4v8H3v-8Zm7-4h4v12h-4V9Zm7-6h4v18h-4V3Z"/><path stroke="#32a36b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 9 5-4 4 3 7-7"/></svg>
+            </span>
+            <span><strong>Consistent Growth</strong><small>Month after month</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="problem-band" id="problem">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">The problem</p>
+            <h2>Homeowners are searching. Too many good contractors are still hard to choose.</h2>
+          </div>
+          <p class="lead">When a homeowner needs repair, replacement, or emergency service, they compare what they can see fast: Google presence, reviews, response speed, and a page that feels trustworthy.</p>
+        </div>
+        <div class="problem-grid">
+          <article class="panel">
+            <h3>They cannot find you easily</h3>
+            <p>Weak local visibility means nearby homeowners often see competitors first, even when your team is the better fit.</p>
+          </article>
+          <article class="panel">
+            <h3>They are not sure they can trust you</h3>
+            <p>Thin reviews, unclear service pages, and inactive profiles make a business feel less established than it really is.</p>
+          </article>
+          <article class="panel">
+            <h3>They move on when nobody responds</h3>
+            <p>Missed calls and slow follow-up turn high-intent homeowners into booked jobs for someone else.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="system">
+      <div class="shell story">
+        <div>
+          <p class="section-kicker">The VoxHome system</p>
+          <h2>Become the business homeowners find, trust, and contact.</h2>
+          <p class="lead">VoxHome connects the parts that usually get handled separately: local search, landing pages, calls, reviews, and social content. The result is a cleaner path from online search to booked work.</p>
+        </div>
+        <div class="story-card">
+          <p>A homeowner searches for help, compares local options, then reaches out to the business that looks visible, responsive, and professional.</p>
+          <div class="notification">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path fill="#24a365" d="M12 22c5.1 0 9.3-4.1 9.3-9.3S17.1 3.4 12 3.4 2.7 7.6 2.7 12.7c0 1.6.4 3.1 1.1 4.4L3 21l4-1c1.4 1.2 3.1 2 5 2Z"/><path stroke="#fff" stroke-linecap="round" stroke-width="2" d="M8 12h8M8 16h5M8 8h8"/></svg>
+            </span>
+            <span><strong>New request: AC repair near me</strong><small>Captured from a high-intent local search</small></span>
+          </div>
+          <div class="notification">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="#f6b739" d="m12 2 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 8.6l6.2-.9L12 2Z"/></svg>
+            </span>
+            <span><strong>Review request sent</strong><small>Build trust after completed jobs</small></span>
+          </div>
+          <div class="notification">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V8m4 8v-3m4-6-7 7-4-4-5 5"/></svg>
+            </span>
+            <span><strong>Monthly visibility update</strong><small>See what improved and what comes next</small></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem-band">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Main services</p>
+            <h2>One practical growth setup for home service businesses.</h2>
+          </div>
+          <p class="lead">No crowded tool stack. No confusing product names. Just the core pieces contractors need to look stronger and receive more local inquiries.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"/></svg>
+            </span>
+            <h3>Local SEO</h3>
+            <p>Improve the way your business appears in local Google and service-area searches.</p>
+          </article>
+          <article class="service">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5h16v14H4V5Z"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 9h8M8 13h5"/></svg>
+            </span>
+            <h3>Professional Landing Page</h3>
+            <p>Give homeowners a clear page with services, coverage area, proof, and contact options.</p>
+          </article>
+          <article class="service">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.6 3.5 8.8 8l-2 2c1.3 2.6 3.4 4.7 6 6l2-2 4.7 2.2-.7 4.1c-.1.7-.8 1.2-1.5 1.2C9.1 21.5 2.5 14.9 2.5 6.7c0-.7.5-1.3 1.2-1.5l2.9-.7Z"/></svg>
+            </span>
+            <h3>Lead & Call Support</h3>
+            <p>Help capture inquiries so fewer good opportunities disappear between jobs.</p>
+          </article>
+          <article class="service">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="m12 2.5 2.9 5.8 6.4.9-4.7 4.6 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.7-4.6 6.4-.9L12 2.5Z"/></svg>
+            </span>
+            <h3>Google Review Growth</h3>
+            <p>Support a steady review-building process after completed work.</p>
+          </article>
+          <article class="service">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M5 5h14v14H5V5Z"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 9h8M8 13h8M8 17h4"/></svg>
+            </span>
+            <h3>Social Media Management</h3>
+            <p>Keep the business active online with polished, consistent local content.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps-band" id="how">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">How it works</p>
+            <h2>A simple path from local search to booked work.</h2>
+          </div>
+          <p class="lead">VoxHome focuses on the touchpoints that help a homeowner move from “I need help” to “this is the company I should call.”</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <h3>Strengthen local visibility</h3>
+            <p>Make your business easier to find in the areas you want to serve.</p>
+          </article>
+          <article class="step">
+            <h3>Improve the landing page</h3>
+            <p>Present your services, trust signals, and contact options clearly.</p>
+          </article>
+          <article class="step">
+            <h3>Capture calls and inquiries</h3>
+            <p>Help more homeowners reach you when they are ready to book.</p>
+          </article>
+          <article class="step">
+            <h3>Build reviews and trust</h3>
+            <p>Turn completed jobs into stronger public proof over time.</p>
+          </article>
+          <article class="step">
+            <h3>Keep the brand active</h3>
+            <p>Stay visible with consistent social content and monthly updates.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">What you get</p>
+            <h2>Clear deliverables without a crowded package table.</h2>
+          </div>
+          <p class="lead">Everything is shaped around your service area, local competition, content needs, and growth goals.</p>
+        </div>
+        <div class="deliverables">
+          <div class="deliverable">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></span>
+            <div><strong>Local SEO setup</strong><p>Service-area targeting and search visibility basics.</p></div>
+          </div>
+          <div class="deliverable">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></span>
+            <div><strong>Google Business Profile support</strong><p>Better profile clarity for the jobs you want.</p></div>
+          </div>
+          <div class="deliverable">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></span>
+            <div><strong>Landing page design</strong><p>A focused page built to explain and convert.</p></div>
+          </div>
+          <div class="deliverable">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></span>
+            <div><strong>Review growth system</strong><p>A practical process to request reviews after jobs.</p></div>
+          </div>
+          <div class="deliverable">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></span>
+            <div><strong>Social media content management</strong><p>Professional posts that keep your company active.</p></div>
+          </div>
+          <div class="deliverable">
+            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></span>
+            <div><strong>Monthly performance update</strong><p>Simple reporting on progress and next steps.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="shell price-wrap">
+        <div>
+          <p class="section-kicker">Pricing</p>
+          <h2>Simple starting point. Scoped around your market.</h2>
+          <p class="lead">VoxHome is designed for small to mid-sized home service businesses that want a stronger local presence without hiring a full in-house marketing team.</p>
+        </div>
+        <div class="price-card">
+          <div class="price-label">Starting from</div>
+          <div class="price">
+            <strong>$1,497</strong>
+            <span>/ month</span>
+          </div>
+          <p>Final pricing depends on your service area, content needs, local competition, and growth goals.</p>
+          <ul>
+            <li>Built for HVAC, plumbing, and roofing contractors</li>
+            <li>Focused on local visibility, trust, and contact options</li>
+            <li>Monthly work and practical performance updates</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="shell cta-inner">
+        <div>
+          <h2>Ready to Help More Homeowners Find Your Business?</h2>
+          <p>Give your company a clearer online path from local search to booked jobs.</p>
+        </div>
+        <a class="button button-primary" href="mailto:hello@voxhome.com?subject=Expand%20my%20local%20reach">Expand My Local Reach</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <span><strong>VoxHome</strong> for local home service contractors</span>
+      <span>HVAC • Plumbing • Roofing</span>
+    </div>
+  </footer>
+</body>
+</html>
