@@ -420,6 +420,20 @@
       transform: translateY(-3px) scale(1.01);
     }
 
+    .calendar-cta.is-sticky {
+      bottom: 24px;
+      max-width: 380px;
+      position: fixed;
+      right: 24px;
+      transform: translateY(0) scale(0.94);
+      width: min(380px, calc(100vw - 48px));
+      z-index: 60;
+    }
+
+    .calendar-cta.is-sticky:hover {
+      transform: translateY(-3px) scale(0.96);
+    }
+
     .calendar-icon,
     .calendar-arrow {
       background: rgba(255, 255, 255, 0.16);
@@ -560,11 +574,21 @@
       position: relative;
     }
 
+    .chooser .section-head {
+      margin-bottom: 34px;
+    }
+
+    .chooser h2 {
+      font-size: clamp(2.85rem, 5.2vw, 5.65rem);
+      line-height: 0.98;
+      max-width: 930px;
+    }
+
     .journey {
       display: grid;
-      gap: 52px;
+      gap: 54px;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      margin-top: 36px;
+      margin-top: 28px;
       position: relative;
       z-index: 2;
     }
@@ -605,8 +629,8 @@
       font: inherit;
       gap: 18px;
       grid-template-columns: 70px 1fr;
-      min-height: 112px;
-      padding: 20px 22px;
+      min-height: 118px;
+      padding: 20px 24px;
       position: relative;
       text-align: left;
       transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
@@ -691,23 +715,34 @@
       box-shadow: var(--shadow-blue);
       display: grid;
       gap: 18px;
-      grid-template-columns: 1fr 330px;
-      margin: 26px auto 0;
-      max-width: 760px;
-      padding: 18px;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      margin: 26px 0 0;
+      max-width: none;
+      min-height: 520px;
+      padding: 24px;
       position: relative;
+      transition: margin-left 360ms ease, width 360ms ease, transform 360ms ease;
+      width: min(980px, 100%);
+    }
+
+    .proof-panel[data-active="Search"] {
+      margin-left: 0;
+    }
+
+    .proof-panel[data-active="Compare"] {
+      margin-left: min(28%, max(0px, calc(100% - 980px)));
+    }
+
+    .proof-panel[data-active="Contact"] {
+      margin-left: min(44%, max(0px, calc(100% - 980px)));
+    }
+
+    .proof-panel[data-active="Choose"] {
+      margin-left: max(0px, calc(100% - 980px));
     }
 
     .proof-panel::before {
-      background: var(--blue);
-      border-radius: 999px;
-      content: "";
-      height: 14px;
-      left: 50%;
-      position: absolute;
-      top: -33px;
-      transform: translateX(-50%);
-      width: 14px;
+      display: none;
     }
 
     .proof-panel.is-switching .insight-visual,
@@ -1438,10 +1473,13 @@
     }
 
     .price-card {
-      background: var(--white);
-      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 88% 0%, rgba(255, 255, 255, 0.24), transparent 28%),
+        linear-gradient(135deg, #0642bf 0%, #126cf1 48%, #7a2cff 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 18px;
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 24px 54px rgba(18, 108, 241, 0.28);
+      color: var(--white);
       padding: 36px;
       transition: transform 180ms ease, box-shadow 180ms ease;
     }
@@ -1452,7 +1490,7 @@
     }
 
     .price-label {
-      color: var(--blue-2);
+      color: #dbe8ff;
       font-size: 0.86rem;
       font-weight: 820;
       letter-spacing: 0.12em;
@@ -1475,7 +1513,7 @@
     .price span,
     .price-card p,
     .price-card li {
-      color: var(--muted);
+      color: #e6efff;
     }
 
     .price-card ul {
@@ -1494,7 +1532,7 @@
     }
 
     .price-card li::before {
-      background: var(--green);
+      background: #64f3b5;
       border-radius: 999px;
       content: "";
       height: 8px;
@@ -1538,11 +1576,18 @@
       align-items: center;
       display: flex;
       gap: 18px;
-      justify-content: space-between;
+      justify-content: center;
     }
 
     .footer strong {
       color: var(--white);
+    }
+
+    .footer a {
+      color: var(--white);
+      font-weight: 820;
+      text-decoration: underline;
+      text-underline-offset: 4px;
     }
 
     @keyframes fadeUp {
@@ -1749,6 +1794,50 @@
       }
     }
 
+    @media (max-width: 1320px) {
+      .system-wrap {
+        align-items: start;
+        gap: 36px;
+        grid-template-columns: 1fr;
+      }
+
+      .system-copy {
+        max-width: 700px;
+      }
+
+      .system-cards {
+        gap: 24px;
+        grid-template-columns: repeat(3, minmax(260px, 1fr));
+      }
+
+      .system-card {
+        min-height: 500px;
+        padding: 24px 22px 0;
+      }
+
+      .mockup {
+        font-size: 0.86rem;
+        min-height: 328px;
+      }
+
+      .system-title h3 {
+        font-size: 1.18rem;
+      }
+
+      .mock-search-top {
+        gap: 8px;
+      }
+
+      .review-card {
+        grid-template-columns: 38px 1fr;
+      }
+
+      .avatar {
+        height: 38px;
+        width: 38px;
+      }
+    }
+
     @media (max-width: 1120px) {
       .journey,
       .service-grid {
@@ -1769,6 +1858,18 @@
 
       .system-copy {
         max-width: 720px;
+      }
+
+      .proof-panel,
+      .proof-panel[data-active] {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .proof-panel::before,
+      .proof-panel[data-active="Contact"]::before,
+      .proof-panel[data-active="Choose"]::before {
+        left: 50%;
       }
     }
 
@@ -1879,6 +1980,12 @@
         grid-template-columns: 48px minmax(0, 1fr) 42px;
         min-height: 76px;
         padding: 14px;
+      }
+
+      .calendar-cta.is-sticky {
+        bottom: 16px;
+        right: 18px;
+        width: calc(100vw - 36px);
       }
 
       .calendar-icon {
@@ -2223,8 +2330,7 @@
 
   <footer class="footer">
     <div class="shell">
-      <span><strong>VoxHome</strong> for local home service contractors</span>
-      <span>HVAC | Plumbing | Roofing</span>
+      <span><strong>VoxHome</strong>, Powered by <a href="https://voxlumedia.com" target="_blank" rel="noopener">Voxlumedia&trade;</a></span>
     </div>
   </footer>
 
@@ -2375,6 +2481,7 @@
 
     const renderJourney = (key) => {
       const state = journeyStates[key] || journeyStates.Search;
+      insightPanel.dataset.active = key;
       insightTop.innerHTML = `<span class="insight-stage">${state.stage}</span><strong class="insight-title">${state.title}</strong><p class="insight-copy">${state.copy}</p>`;
       insightVisual.innerHTML = state.visual;
       insightSide.innerHTML = state.side;
@@ -2400,6 +2507,18 @@
         item.classList.add("is-active");
       });
     });
+
+    const calendarCta = document.querySelector(".calendar-cta");
+    const hero = document.querySelector(".hero");
+    const syncStickyCta = () => {
+      if (!calendarCta || !hero) return;
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      calendarCta.classList.toggle("is-sticky", window.scrollY > heroBottom - 90);
+    };
+
+    syncStickyCta();
+    window.addEventListener("scroll", syncStickyCta, { passive: true });
+    window.addEventListener("resize", syncStickyCta);
   </script>
 </body>
 </html>
